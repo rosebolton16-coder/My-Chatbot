@@ -372,3 +372,39 @@ code{
         font-size:30px;
     }
       }
+/* =========================
+   LIGHT THEME
+========================= */
+
+body.light-theme{
+
+    --bg:#f5f7fb;
+    --sidebar:#ffffff;
+    --card:#ffffff;
+    --card-hover:#f1f5f9;
+    --border:#dbe3ef;
+    --text:#111827;
+    --muted:#475569;
+
+    background:#f5f7fb;
+    color:var(--text);
+
+}
+
+body.light-theme .sidebar{
+    background:#ffffff;
+}
+
+body.light-theme .message.bot{
+    background:#ffffff;
+}
+
+body.light-theme textarea,
+body.light-theme input{
+    color:#111827;
+}
+
+body.light-theme .icon-btn,
+body.light-theme .menu-btn{
+    color:#111827;
+    }
