@@ -417,7 +417,10 @@ async function sendMessage(){
 
 sendBtn?.addEventListener(
     "click",
-    sendMessage
+    () => {
+        alert("Button works");
+        sendMessage();
+    }
 );
 
 messageInput?.addEventListener(
