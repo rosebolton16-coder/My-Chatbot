@@ -12,10 +12,9 @@ const messageInput =
         "messageInput"
     );
 
-const sendBtn =
-    document.getElementById(
-        "sendBtn"
-    );
+const sendBtn = document.getElementById("sendBtn");
+
+alert(sendBtn ? "Send button found" : "Send button NOT found");
 
 const typingIndicator =
     document.getElementById(
