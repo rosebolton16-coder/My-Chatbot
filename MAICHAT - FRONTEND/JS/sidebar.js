@@ -1,3 +1,4 @@
+alert("SIDEBAR LOADED");
 // =========================================================
 // MAICHAT SIDEBAR CONTROLLER
 // Mobile + Desktop responsive sidebar
