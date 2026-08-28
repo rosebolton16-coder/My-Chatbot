@@ -1110,17 +1110,17 @@ body.light-theme .input-area {
 
 #sendBtn{
 
-    width:48px;
-    height:48px;
+    width:44px !important;
+    height:44px !important;
 
     border:none;
     outline:none;
 
-    border-radius:50%;
+    border-radius:50% !important;
 
-    background:#10a37f;
+    background:#ffffff !important;
 
-    color:white;
+    color:#000000 !important;
 
     display:flex;
     align-items:center;
@@ -1128,9 +1128,9 @@ body.light-theme .input-area {
 
     cursor:pointer;
 
-    transition:all .2s ease;
-
     flex-shrink:0;
+
+    transition:all .2s ease;
 }
 
 #sendBtn:hover{
@@ -1138,22 +1138,21 @@ body.light-theme .input-area {
 }
 
 #sendBtn:active{
-    transform:scale(0.95);
+    transform:scale(.95);
 }
 
 #sendBtn svg{
-    width:18px;
-    height:18px;
+    width:16px;
+    height:16px;
 }
+
 #sendBtn:disabled{
 
-    background:#3f4a5a;
+    background:#555 !important;
+    color:#999 !important;
 
     opacity:.6;
-
-    cursor:not-allowed;
-}
-
+   }
 /* =========================
    MODAL
 ========================= */
