@@ -1571,3 +1571,30 @@ body.light-theme .modal-content {
     }
 }
   
+@media (max-width: 768px){
+
+    .welcome{
+        min-height: calc(100vh - 260px);
+        padding: 40px 18px 170px;
+        justify-content: center;
+    }
+
+    .input-area{
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+
+        width: auto;
+        max-width: none;
+
+        transform: none;
+
+        z-index: 999;
+    }
+
+    .chat-container{
+        padding-bottom: 220px;
+    }
+
+}
