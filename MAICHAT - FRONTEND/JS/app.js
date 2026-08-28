@@ -6,9 +6,18 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
+        // =====================
+        // ELEMENTS
+        // =====================
+
         const messageInput =
             document.getElementById(
                 "messageInput"
+            );
+
+        const sendBtn =
+            document.getElementById(
+                "sendBtn"
             );
 
         const fileInput =
@@ -22,10 +31,24 @@ document.addEventListener(
             );
 
         // =====================
+        // SEND BUTTON STATE
+        // =====================
+
+        if(sendBtn){
+
+            sendBtn.disabled = true;
+
+        }
+
+        // =====================
         // AUTO RESIZE TEXTAREA
         // =====================
 
         function autoResize(){
+
+            if(!messageInput){
+                return;
+            }
 
             messageInput.style.height =
                 "auto";
@@ -38,12 +61,186 @@ document.addEventListener(
 
         }
 
+        // =====================
+        // UPDATE SEND BUTTON
+        // =====================
+
+        function updateSendButton(){
+
+            if(
+                !messageInput ||
+                !sendBtn
+            ){
+                return;
+            }
+
+            sendBtn.disabled =
+                messageInput.value
+                    .trim() === "";
+
+        }
+
+        // =====================
+        // INPUT EVENTS
+        // =====================
+
         messageInput?.addEventListener(
             "input",
-            autoResize
+            () => {
+
+                autoResize();
+
+                updateSendButton();
+
+            }
         );
 
         autoResize();
+
+        updateSendButton();
+
+        // =====================
+        // HIDE WELCOME SCREEN
+        // =====================
+
+        function hideWelcomeScreen(){
+
+            if(welcomeScreen){
+
+                welcomeScreen.style.display =
+                    "none";
+
+            }
+
+        }
+
+        // =====================
+        // SHOW WELCOME SCREEN
+        // =====================
+
+        function showWelcomeScreen(){
+
+            if(welcomeScreen){
+
+                welcomeScreen.style.display =
+                    "flex";
+
+            }
+
+        }
+
+        // =====================
+        // SEND MESSAGE
+        // =====================
+
+        function sendMessage(){
+
+            const text =
+                messageInput.value
+                    .trim();
+
+            if(!text){
+                return;
+            }
+
+            hideWelcomeScreen();
+
+            if(
+                typeof createMessage
+                === "function"
+            ){
+
+                createMessage(
+                    "user",
+                    text
+                );
+
+            }
+
+            if(
+                typeof
+                addMessageToConversation
+                === "function"
+            ){
+
+                addMessageToConversation(
+                    "user",
+                    text
+                );
+
+            }
+
+            messageInput.value = "";
+
+            autoResize();
+
+            updateSendButton();
+
+            // Future AI Request
+
+            window.MAICHAT_API
+                .sendMessage(text)
+                .then(result => {
+
+                    if(
+                        typeof createMessage
+                        === "function"
+                    ){
+
+                        createMessage(
+                            "bot",
+                            result.response
+                        );
+
+                    }
+
+                    if(
+                        typeof
+                        addMessageToConversation
+                        === "function"
+                    ){
+
+                        addMessageToConversation(
+                            "bot",
+                            result.response
+                        );
+
+                    }
+
+                });
+
+        }
+
+        // =====================
+        // SEND BUTTON CLICK
+        // =====================
+
+        sendBtn?.addEventListener(
+            "click",
+            sendMessage
+        );
+
+        // =====================
+        // ENTER TO SEND
+        // =====================
+
+        messageInput?.addEventListener(
+            "keydown",
+            event => {
+
+                if(
+                    event.key === "Enter" &&
+                    !event.shiftKey
+                ){
+
+                    event.preventDefault();
+
+                    sendMessage();
+
+                }
+
+            }
+        );
 
         // =====================
         // FILE UPLOAD
@@ -57,24 +254,22 @@ document.addEventListener(
                     event.target.files[0];
 
                 if(!file){
-
                     return;
-
                 }
 
                 hideWelcomeScreen();
 
                 const fileMessage =
 
-`📎 **File Attached**
+`📎 File Attached
 
-**Name:** ${file.name}
+Name: ${file.name}
 
-**Size:** ${(
+Size: ${(
     file.size / 1024
 ).toFixed(2)} KB
 
-**Type:** ${
+Type: ${
     file.type ||
     "Unknown"
 }`;
@@ -110,19 +305,39 @@ document.addEventListener(
         );
 
         // =====================
-        // HIDE WELCOME
+        // SUGGESTION CARDS
         // =====================
 
-        function hideWelcomeScreen(){
+        document
+            .querySelectorAll(
+                ".suggestion-card"
+            )
+            .forEach(card => {
 
-            if(welcomeScreen){
+                card.addEventListener(
+                    "click",
+                    () => {
 
-                welcomeScreen.style.display =
-                    "none";
+                        if(
+                            !messageInput
+                        ){
+                            return;
+                        }
 
-            }
+                        messageInput.value =
+                            card.textContent
+                                .trim();
 
-        }
+                        autoResize();
+
+                        updateSendButton();
+
+                        messageInput.focus();
+
+                    }
+                );
+
+            });
 
         // =====================
         // API PLACEHOLDER
@@ -135,14 +350,17 @@ document.addEventListener(
             ){
 
                 console.log(
-                    "Future AI Request:",
+                    "AI Request:",
                     message
                 );
 
                 return {
+
                     success:true,
+
                     response:
-                    "Connect OpenAI, Gemini or Grok here."
+                    "Connect OpenAI, Gemini, DeepSeek or Grok API here."
+
                 };
 
             }
@@ -150,7 +368,21 @@ document.addEventListener(
         };
 
         // =====================
-        // APP READY
+        // GLOBAL METHODS
+        // =====================
+
+        window.MAICHAT = {
+
+            hideWelcomeScreen,
+
+            showWelcomeScreen,
+
+            sendMessage
+
+        };
+
+        // =====================
+        // READY
         // =====================
 
         console.log(
