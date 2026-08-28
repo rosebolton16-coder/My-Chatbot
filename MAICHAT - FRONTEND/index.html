@@ -1,39 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MAICHAT AI</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+</head>
+
 <body>
 
 <div class="app">
 
-    <!-- Sidebar -->
+    <!-- SIDEBAR -->
     <aside class="sidebar collapsed" id="sidebar">
 
         <div class="sidebar-top">
 
-            <button
-                id="newChat"
-                class="new-chat-btn">
+            <button id="newChat"
+                    class="new-chat-btn">
                 + New Chat
             </button>
 
         </div>
 
-        <input
-            type="search"
-            id="searchInput"
-            placeholder="Search chats..."
-        >
+        <div class="search-container">
+            <input type="search"
+                   id="searchInput"
+                   placeholder="Search chats...">
+        </div>
 
-        <div id="chatList" class="chat-list"></div>
+        <div id="chatList"
+             class="chat-list">
+        </div>
 
     </aside>
 
-    <!-- Main -->
-
+    <!-- MAIN -->
     <main class="main">
 
+        <!-- HEADER -->
         <header class="topbar">
 
-            <button
-                id="toggleSidebar"
-                class="hamburger-btn">
+            <button id="toggleSidebar"
+                    class="hamburger-btn">
                 ☰
             </button>
 
@@ -41,9 +67,9 @@
 
         </header>
 
-        <section
-            id="welcomeScreen"
-            class="welcome">
+        <!-- WELCOME SCREEN -->
+        <section id="welcomeScreen"
+                 class="welcome">
 
             <div class="welcome-icon">
                 🤖
@@ -88,14 +114,14 @@
 
         </section>
 
-        <section
-            id="chatContainer"
-            class="chat-container">
+        <!-- CHAT -->
+        <section id="chatContainer"
+                 class="chat-container">
         </section>
 
-        <div
-            id="typingIndicator"
-            class="typing">
+        <!-- TYPING -->
+        <div id="typingIndicator"
+             class="typing">
 
             <span></span>
             <span></span>
@@ -104,39 +130,32 @@
         </div>
 
         <!-- INPUT -->
-
         <footer class="input-area">
 
-            <textarea
-                id="messageInput"
-                placeholder="Message MAICHAT..."
-            ></textarea>
+            <textarea id="messageInput"
+                      placeholder="Message MAICHAT..."></textarea>
 
             <div class="bottom-tools">
 
-                <label
-                    for="fileInput"
-                    class="tool-btn">
+                <label for="fileInput"
+                       class="tool-btn">
                     📎
                 </label>
 
-                <button
-                    id="voiceBtn"
-                    class="tool-btn">
+                <button id="voiceBtn"
+                        class="tool-btn">
                     🎤
                 </button>
 
             </div>
 
-            <button
-                id="sendBtn">
+            <button id="sendBtn">
                 ➤
             </button>
 
-            <input
-                type="file"
-                id="fileInput"
-                hidden>
+            <input type="file"
+                   id="fileInput"
+                   hidden>
 
         </footer>
 
@@ -144,11 +163,14 @@
 
 </div>
 
-<script src="js/storage.js"></script>
-<script src="js/sidebar.js"></script>
-<script src="js/theme.js"></script>
-<script src="js/voice.js"></script>
-<script src="js/chat.js"></script>
-<script src="js/app.js"></script>
+<!-- JS -->
+
+<script src="storage.js"></script>
+<script src="sidebar.js"></script>
+<script src="theme.js"></script>
+<script src="voice.js"></script>
+<script src="chat.js"></script>
+<script src="app.js"></script>
 
 </body>
+</html>
