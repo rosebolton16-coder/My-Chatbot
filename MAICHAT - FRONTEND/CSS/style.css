@@ -1244,3 +1244,26 @@ body.light-theme .input-area {
         min-height: 120px;
     }
 }
+/* Prevent background scrolling while mobile sidebar is open */
+
+body.sidebar-open {
+    overflow: hidden;
+}
+
+/* Make sure sidebar stays above the overlay */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        z-index: 100;
+    }
+
+    .sidebar-overlay {
+        z-index: 90;
+    }
+
+    .main {
+        z-index: 1;
+    }
+
+}
