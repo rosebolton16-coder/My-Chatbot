@@ -902,7 +902,7 @@ body.light-theme .topbar {
     position: absolute;
 
     left: 50%;
-    bottom: 16px;
+    bottom: 8px;
 
     transform: translateX(-50%);
 
