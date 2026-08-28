@@ -28,6 +28,13 @@ const welcomeScreen =
     );
 
 // =========================
+// BACKEND URL
+// =========================
+
+const API_URL =
+    "https://mai-3-1qoi.onrender.com/chat";
+
+// =========================
 // UTILITIES
 // =========================
 
@@ -59,31 +66,52 @@ function createMessage(
 ){
 
     const message =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     message.className =
         `message ${role}`;
 
-    message.innerHTML =
-        marked.parse(content);
+    if(
+        typeof marked !==
+        "undefined"
+    ){
+
+        message.innerHTML =
+            marked.parse(
+                content
+            );
+
+    }else{
+
+        message.textContent =
+            content;
+
+    }
 
     chatContainer.appendChild(
         message
     );
 
-    // Highlight code blocks
+    if(
+        typeof hljs !==
+        "undefined"
+    ){
 
-    message
-        .querySelectorAll(
-            "pre code"
-        )
-        .forEach(block => {
+        message
+            .querySelectorAll(
+                "pre code"
+            )
+            .forEach(block => {
 
-            hljs.highlightElement(
-                block
-            );
+                hljs.highlightElement(
+                    block
+                );
 
-        });
+            });
+
+    }
 
     scrollToBottom();
 
@@ -97,7 +125,16 @@ function createMessage(
 
 function loadConversationMessages(){
 
-    chatContainer.innerHTML = "";
+    chatContainer.innerHTML =
+        "";
+
+    if(
+        typeof
+        getCurrentConversation
+        !== "function"
+    ){
+        return;
+    }
 
     const conversation =
         getCurrentConversation();
@@ -117,9 +154,11 @@ function loadConversationMessages(){
 
             welcomeScreen.style.display =
                 "flex";
+
         }
 
         return;
+
     }
 
     hideWelcome();
@@ -138,12 +177,13 @@ function loadConversationMessages(){
 }
 
 // =========================
-// CLEAR UI
+// CLEAR CHAT
 // =========================
 
 function clearChatUI(){
 
-    chatContainer.innerHTML = "";
+    chatContainer.innerHTML =
+        "";
 
     if(welcomeScreen){
 
@@ -155,7 +195,7 @@ function clearChatUI(){
 }
 
 // =========================
-// TYPING INDICATOR
+// TYPING
 // =========================
 
 function showTyping(){
@@ -218,22 +258,41 @@ function streamResponse(
                     stream
                 );
 
-                bubble.innerHTML =
-                    marked.parse(
-                        text
-                    );
+                if(
+                    typeof marked !==
+                    "undefined"
+                ){
 
-                bubble
-                    .querySelectorAll(
-                        "pre code"
-                    )
-                    .forEach(block => {
-
-                        hljs.highlightElement(
-                            block
+                    bubble.innerHTML =
+                        marked.parse(
+                            text
                         );
 
-                    });
+                }else{
+
+                    bubble.textContent =
+                        text;
+
+                }
+
+                if(
+                    typeof hljs !==
+                    "undefined"
+                ){
+
+                    bubble
+                        .querySelectorAll(
+                            "pre code"
+                        )
+                        .forEach(block => {
+
+                            hljs.highlightElement(
+                                block
+                            );
+
+                        });
+
+                }
 
             }
 
@@ -245,10 +304,11 @@ function streamResponse(
 // SEND MESSAGE
 // =========================
 
-function sendMessage(){
+async function sendMessage(){
 
     const text =
-        messageInput.value.trim();
+        messageInput.value
+            .trim();
 
     if(!text){
 
@@ -263,53 +323,91 @@ function sendMessage(){
         text
     );
 
-    addMessageToConversation(
-        "user",
-        text
-    );
+    if(
+        typeof
+        addMessageToConversation
+        === "function"
+    ){
 
-    messageInput.value = "";
+        addMessageToConversation(
+            "user",
+            text
+        );
+
+    }
+
+    messageInput.value =
+        "";
 
     showTyping();
 
-    // TEMP AI DEMO
-    // Replace later with API
+    try{
 
-    setTimeout(() => {
+        const response =
+            await fetch(
+                API_URL,
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                        "application/json"
+                    },
+
+                    body:
+                    JSON.stringify({
+                        message:text
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
 
         hideTyping();
 
-        const aiReply =
+        if(
+            !data.success
+        ){
 
-`Hello 👋
+            streamResponse(
+                "⚠️ AI request failed."
+            );
 
-I'm **MAICHAT Premium**.
+            return;
 
-You can connect me to:
-
-- OpenAI
-- Gemini
-- Grok
-
-Example code:
-
-\`\`\`javascript
-function hello(){
-  console.log("MAICHAT");
-}
-\`\`\`
-`;
+        }
 
         streamResponse(
-            aiReply
+            data.reply
         );
 
-        addMessageToConversation(
-            "bot",
-            aiReply
+        if(
+            typeof
+            addMessageToConversation
+            === "function"
+        ){
+
+            addMessageToConversation(
+                "bot",
+                data.reply
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(
+            error
         );
 
-    },1200);
+        hideTyping();
+
+        streamResponse(
+            "⚠️ Unable to reach MAICHAT servers."
+        );
+
+    }
 
 }
 
@@ -349,6 +447,10 @@ document.addEventListener(
     () => {
 
         loadConversationMessages();
+
+        console.log(
+            "MAICHAT Connected"
+        );
 
     }
 );
