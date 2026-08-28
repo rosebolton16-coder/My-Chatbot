@@ -457,3 +457,4 @@ document.addEventListener(
 
     }
 );
+alert("chat.js loaded");
