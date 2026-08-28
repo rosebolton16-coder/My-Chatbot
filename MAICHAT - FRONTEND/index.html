@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MAICHAT AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+    >
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+</head>
+
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-top">
+                <div class="logo">
+                    <span class="logo-icon" aria-hidden="true">🤖</span>
+                    <span class="logo-text">MAICHAT</span>
+                </div>
+
+                <button
+                    id="toggleSidebar"
+                    class="icon-btn"
+                    type="button"
+                    aria-label="Toggle sidebar"
+                >
+                    ☰
+                </button>
+            </div>
+
+            <button
+                id="newChat"
+                class="new-chat-btn"
+                type="button"
+            >
+                + New Chat
+            </button>
+
+            <div class="search-container">
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search chats..."
+                    aria-label="Search chats"
+                >
+            </div>
+
+            <div
+                id="chatList"
+                class="chat-list"
+                aria-label="Chat history"
+            ></div>
+
+            <div class="sidebar-bottom">
+                <button
+                    id="themeBtn"
+                    class="menu-btn"
+                    type="button"
+                >
+                    🌙 Theme
+                </button>
+
+                <button
+                    id="settingsBtn"
+                    class="menu-btn"
+                    type="button"
+                >
+                    ⚙ Settings
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <header class="topbar">
+                <h1>MAICHAT AI</h1>
+
+                <div class="top-actions">
+                    <button
+                        id="voiceBtn"
+                        class="icon-btn"
+                        type="button"
+                        aria-label="Activate voice input"
+                    >
+                        🎤
+                    </button>
+
+                    <label
+                        class="icon-btn"
+                        for="fileInput"
+                        aria-label="Attach a file"
+                    >
+                        📎
+                    </label>
+
+                    <input
+                        type="file"
+                        id="fileInput"
+                        hidden
+                    >
+                </div>
+            </header>
+
+            <!-- Welcome Screen -->
+            <section
+                id="welcomeScreen"
+                class="welcome"
+                aria-labelledby="welcomeHeading"
+            >
+                <h2 id="welcomeHeading">Welcome to MAICHAT</h2>
+
+                <p>
+                    Ask questions, generate ideas,
+                    write code, and learn more efficiently.
+                </p>
+            </section>
+
+            <!-- Chat Area -->
+            <section
+                id="chatContainer"
+                class="chat-container"
+                aria-live="polite"
+            ></section>
+
+            <!-- Typing Indicator -->
+            <div
+                id="typingIndicator"
+                class="typing"
+                aria-label="MAICHAT is typing"
+                role="status"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <!-- Input Area -->
+            <footer class="input-area">
+                <textarea
+                    id="messageInput"
+                    placeholder="Message MAICHAT..."
+                    rows="1"
+                    aria-label="Message MAICHAT"
+                ></textarea>
+
+                <button
+                    id="sendBtn"
+                    type="button"
+                    aria-label="Send message"
+                >
+                    ➤
+                </button>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div
+        id="settingsModal"
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="settingsTitle"
+    >
+        <div class="modal-content">
+            <h2 id="settingsTitle">Settings</h2>
+
+            <div class="setting-row">
+                <span>Theme</span>
+
+                <button
+                    id="themeToggle"
+                    type="button"
+                >
+                    Toggle
+                </button>
+            </div>
+
+            <button
+                id="closeSettings"
+                type="button"
+            >
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/voice.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
