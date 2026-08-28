@@ -1031,6 +1031,19 @@ body.light-theme .input-area {
 .tool-btn:hover{
     background: rgba(255,255,255,0.08);
 }
+.file-btn svg,
+#voiceBtn svg{
+    width:18px;
+    height:18px;
+}
+
+.file-btn{
+    color:#d1d5db;
+}
+
+.file-btn:hover{
+    color:#ffffff;
+}
     color: var(--text);
 
     font-size: 21px;
